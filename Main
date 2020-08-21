@@ -1,0 +1,31 @@
+function output = blur(img,w)
+blur = double(img);
+[m,n] = size(blur);
+a = 2*w + 1;
+for i = 1:m
+    for j = 1:n
+        p = i - fix(a/2);
+        q = i + fix(a/2);
+        r = j - fix(a/2);
+        s = j + fix(a/2);
+        if p < 1
+            p = 1;
+        end
+        if q > m
+            q = m;
+        end
+        if r < 1
+            r = 1;
+        end
+        if s > n
+            s = n;
+        end
+        A = blur([p : q],[r : s]);
+        B(i,j) = mean(A(:));
+    end
+    
+output = uint8(B);
+end
+img = imread('vandy.png');
+output = blur(img,2);
+imshow(output);
